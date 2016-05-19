@@ -1,6 +1,7 @@
 package com.zigabyte.tapper.level.ui;
 
 import android.graphics.Canvas;
+import android.util.Log;
 
 import static com.zigabyte.tapper.Game.game;
 import static com.zigabyte.tapper.Game.textPaint;

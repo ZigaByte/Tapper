@@ -1,24 +1,19 @@
 package com.zigabyte.tapper.menu.button;
 
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.RectF;
-import android.util.Log;
-
 import com.zigabyte.tapper.math.Vector2f;
-import com.zigabyte.tapper.math.animation.AnimationFloat;
 import com.zigabyte.tapper.math.animation.AnimationFloatSin;
+import com.zigabyte.tapper.menu.MainMenu;
 import com.zigabyte.tapper.resources.Images;
 
 import static com.zigabyte.tapper.Game.game;
 import static com.zigabyte.tapper.MyCanvas.SIZE;
-/**
- * Created by Žiga on 27.4.2016.
- */
-public class PlayButton extends Button{
 
-    public PlayButton(){
+/**
+ * Created by zvene_000 on 19.5.2016.
+ */
+public class ContinueButton extends  Button{
+
+    public ContinueButton(){
         animations.add(new AnimationFloatSin(scale, 0.1f, 120) {
             @Override
             public void setValue() {
@@ -26,17 +21,17 @@ public class PlayButton extends Button{
             }
         });
 
-        bitmap = Images.button_play;
+        bitmap = Images.button_continue;
     }
 
     @Override
     protected void init() {
-        size = new Vector2f(440,440);
-        pos = SIZE.div(2).sub(size.div(2));
+        size = new Vector2f(600,250);
+        pos = SIZE.div(2).sub(size.div(2)).add(new Vector2f(0,100));
     }
 
     @Override
     public void clicked() {
-        game.start();
+        //game.menu = new MainMenu();
     }
 }

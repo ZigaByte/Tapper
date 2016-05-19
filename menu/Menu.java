@@ -4,7 +4,9 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import com.zigabyte.tapper.input.Input;
+import com.zigabyte.tapper.level.ui.Background;
 import com.zigabyte.tapper.math.Vector2f;
+import com.zigabyte.tapper.menu.button.BackButton;
 import com.zigabyte.tapper.menu.button.Button;
 import com.zigabyte.tapper.menu.button.PlayButton;
 
@@ -16,13 +18,14 @@ import java.util.ArrayList;
 public class Menu {
 
     protected ArrayList<Button> buttons = new ArrayList<Button>();
+    protected Background background;
 
     public Menu(){
         init();
     }
 
     protected void init(){
-
+        background = new Background();
     }
 
     public void checkInput(){
@@ -43,9 +46,11 @@ public class Menu {
         for(Button b : buttons){
             b.update();
         }
+        background.update();
     }
 
     public void render(Canvas g){
+        background.render(g);
         for(Button b : buttons){
             b.render(g);
         }

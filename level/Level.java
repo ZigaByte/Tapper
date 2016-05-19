@@ -30,7 +30,6 @@ public class Level implements Animatable{
     private int stage;
 
     private ScoreText scoreText;
-    private GameOverText gameOverText;
     private StageText stageText;
 
     public boolean started = false;
@@ -50,7 +49,7 @@ public class Level implements Animatable{
                 tiles.add(new Tile(new Vector2f(x * (960 / 4), y * (1600 / 4)), new Vector2f((960 / 4), (1600 / 4))));
             }
         }
-        stages.add(new Stage(1, 50, 6));
+        stages.add(new Stage(1, 50, 15));
         stages.add(new Stage(2, 50, 12));
         stages.add(new Stage(3, 50, 10));
         stages.add(new Stage(4, 50, 8));
@@ -60,7 +59,6 @@ public class Level implements Animatable{
         currentStage = stages.get(0);
 
         scoreText = new ScoreText();
-        gameOverText = new GameOverText();
         stageText = new StageText();
     }
 
@@ -77,12 +75,6 @@ public class Level implements Animatable{
                     currentStage.clicks++;
                 }else{
                     endLevel();
-                }
-            }else{
-                // If some time after ending has passed
-                Log.e("time ending", time + " " + endedTime);
-                if(time - endedTime > 80){
-                    game.end();
                 }
             }
         }
@@ -109,8 +101,8 @@ public class Level implements Animatable{
         if(!ended){
             ended = true;
             endedTime = time;
-            gameOverText.setEnabled(true);
             stageText.setEnabled(false);
+            game.end();
         }
     }
 
@@ -127,7 +119,8 @@ public class Level implements Animatable{
         activateTiles();
 
         // Check stages
-        if(currentStage.clicks >= currentStage.CLICKS_NEEDED){
+        if(currentStage
+                .clicks >= currentStage.CLICKS_NEEDED){
             if(stage >= stages.size()){
                 // oh well, no more stages
                 // oh well, no more stages
@@ -136,6 +129,7 @@ public class Level implements Animatable{
             }
         }
         scoreText.update();
+        stageText.update();
     }
 
     public void render(Canvas g) {
@@ -145,11 +139,17 @@ public class Level implements Animatable{
 
         stageText.render(g);
         scoreText.render(g);
-        gameOverText.render(g);
     }
 
     public int getStageNumber(){
         return currentStage.STAGE_NUMBER;
     }
 
+    public ArrayList<Tile> getTiles() {
+        return tiles;
+    }
+
+    public ScoreText getScoreText() {
+        return scoreText;
+    }
 }

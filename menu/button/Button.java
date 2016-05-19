@@ -1,7 +1,9 @@
 package com.zigabyte.tapper.menu.button;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.Log;
 
 import com.zigabyte.tapper.math.animation.Animatable;
@@ -15,22 +17,18 @@ import static com.zigabyte.tapper.Game.game;
  */
 public class Button implements Animatable{
 
+    protected Bitmap bitmap;
+
     public Vector2f pos;
     public Vector2f size;
 
     protected Vector2f display_pos;
     protected float rotation;
+    protected float scale = 1;
 
     public Button(){
         init();
         display_pos = pos;
-
-        /*animations.add(new AnimationVector(pos, new Vector2f(0.1f, 0.1f)) {
-            public void update() {
-                animatable = animatable.add(step);
-                display_pos = animatable;
-            }
-        });*/
     }
 
     protected void init(){
@@ -51,11 +49,26 @@ public class Button implements Animatable{
     public void update(){
     }
 
-    public void render(Canvas g){
+    public void translate(Canvas g){
         g.translate(display_pos.x + size.x / 2, display_pos.y + size.y / 2);
         g.rotate(rotation);
-        g.drawRect(- size.x / 2, - size.y / 2,+ size.x / 2,+ size.y / 2 ,  new Paint());
+        g.scale(scale, scale);
+    }
+
+    public void untranslate(Canvas g){
+        g.scale(1/scale, 1/scale);
         g.rotate(-rotation);
         g.translate(-(display_pos.x + size.x / 2), -(display_pos.y + size.y / 2));
+    }
+
+    public void render(Canvas g){
+        translate(g);
+        if(bitmap == null) {
+            g.drawRect(-size.x / 2, -size.y / 2, +size.x / 2, +size.y / 2, new Paint());
+        }else {
+            Rect rect = new Rect(-(int)size.x / 2, -(int)size.y / 2, (int)size.x / 2, (int)size.y / 2 );
+            g.drawBitmap(bitmap, null, rect,  new Paint());
+        }
+        untranslate(g);
     }
 }

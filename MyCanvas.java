@@ -49,6 +49,13 @@ public class MyCanvas extends SurfaceView implements Runnable  {
         start();
     }
 
+    public MyCanvas(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        this.context = (MainActivity) context;
+        init();
+        start();
+    }
+
     @SuppressWarnings("deprecation")
     private void init() {
         canvas = this;
@@ -150,7 +157,8 @@ public class MyCanvas extends SurfaceView implements Runnable  {
     private void render(Canvas canvas) {
         //BDC3C7, text.setColor(0xffecf0f1);
         // D4D9CC
-        canvas.drawARGB(0xff, (Colors.LIGHT_GRAY & 0xff0000) >> 16, (Colors.LIGHT_GRAY & 0xff00) >> 8, Colors.LIGHT_GRAY & 0xff);
+        int color = Colors.DARK;
+        canvas.drawARGB(0xff, (color & 0xff0000) >> 16, (color & 0xff00) >> 8, color & 0xff);
         canvas.scale(1 / scaleX, 1 / scaleY);
 
         game.render(canvas);

@@ -4,11 +4,13 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import com.zigabyte.tapper.level.Level;
+import com.zigabyte.tapper.level.Tile;
 import com.zigabyte.tapper.math.animation.Animation;
 import com.zigabyte.tapper.menu.MainMenu;
 import com.zigabyte.tapper.menu.Menu;
 import com.zigabyte.tapper.menu.ResultMenu;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Game {
@@ -48,7 +50,7 @@ public class Game {
     public void end() {
         //level = null;
         state = GameState.MENU;
-        menu = new ResultMenu();
+        menu = new ResultMenu(level.getTiles());
     }
 
     public void update() {
@@ -67,7 +69,7 @@ public class Game {
 
 
     public void render(Canvas g) {
-        switch(state){
+        switch (state) {
             case MENU:
                 menu.render(g);
                 break;
@@ -76,5 +78,4 @@ public class Game {
                 break;
         }
     }
-
 }

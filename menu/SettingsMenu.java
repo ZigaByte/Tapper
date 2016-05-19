@@ -9,6 +9,7 @@ import com.zigabyte.tapper.menu.button.BackButton;
 public class SettingsMenu extends Menu {
     @Override
     protected void init() {
+        super.init();
         buttons.add(new BackButton());
     }
 }

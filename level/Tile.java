@@ -30,24 +30,28 @@ public class Tile implements Animatable{
         this(new Vector2f(), new Vector2f());
     }
 
-    public Tile(Vector2f pos0, Vector2f size) {
-        this.pos = pos0;
+    public Tile(Vector2f pos, Vector2f size) {this(pos, size, true);}
+
+    public Tile(Vector2f pos, Vector2f size, boolean animation) {
+        this.pos = pos;
         this.size = size;
 
         stage = 0;
-        animations.add(new AnimationFloatSqrt(0, 255, 40) {
-            @Override
-            public void setValue() {
-                transparency = (int) animatable;
-                Log.e("Animations", transparency + " ss");
-            }
 
-            @Override
-            public void finish() {
-                game.level.started = true;
-                game.level.paused = false;
-            }
-        });
+        if(animation)
+            animations.add(new AnimationFloatSqrt(0, 255, 40) {
+                @Override
+                public void setValue() {
+                    transparency = (int) animatable;
+                }
+
+                @Override
+                public void finish() {
+                    game.level.started = true;
+                    game.level.paused = false;
+                }
+            });
+        else transparency = 255;
     }
 
     public boolean clicked() {
@@ -70,7 +74,8 @@ public class Tile implements Animatable{
 
         switch (stage) {
             case 0:
-                p.setColor(Colors.GRAY);
+                //p.setColor(Colors.GRAY);
+                p.setColor(Colors.CLOUD);
                 break;
             case 1:
                 p.setColor(Colors.YELLOW);
@@ -84,12 +89,12 @@ public class Tile implements Animatable{
         }
 
         g.translate(pos.x + size.x / 2, pos.y + size.y / 2);
-        g.scale(0.95f * (transparency / 255.0f), 0.95f * (transparency / 255.0f));
+        g.scale(0.965f * (transparency / 255.0f), 0.975f * (transparency / 255.0f));
 
         p.setAlpha(transparency);
         g.drawRect(-size.x / 2, -size.y / 2, size.x / 2, size.y / 2, p);
 
-        g.scale(1 / (0.95f * (transparency / 255.0f)), 1 / (0.95f * (transparency / 255.0f)));
+        g.scale(1 / (0.965f * (transparency / 255.0f)), 1 / (0.975f * (transparency / 255.0f)));
         g.translate(-(pos.x + size.x / 2), -(pos.y + size.y / 2));
     }
 
