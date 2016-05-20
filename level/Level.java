@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.util.Log;
 
 import com.zigabyte.tapper.input.Input;
+import com.zigabyte.tapper.level.stage.Pattern;
 import com.zigabyte.tapper.level.stage.Stage;
 import com.zigabyte.tapper.level.ui.GameOverText;
 import com.zigabyte.tapper.level.ui.ScoreText;
@@ -49,8 +50,8 @@ public class Level implements Animatable{
                 tiles.add(new Tile(new Vector2f(x * (960 / 4), y * (1600 / 4)), new Vector2f((960 / 4), (1600 / 4))));
             }
         }
-        stages.add(new Stage(1, 50, 15));
-        stages.add(new Stage(2, 50, 12));
+        stages.add(new Stage(1, 20, 15));
+        stages.add(new Stage(2, 20, 12));
         stages.add(new Stage(3, 50, 10));
         stages.add(new Stage(4, 50, 8));
         stages.add(new Stage(5, 50, 6));
@@ -83,17 +84,30 @@ public class Level implements Animatable{
     public void activateTiles(){
         currentStage.time++;
         if (time++ % currentStage.SPAWN_SPEED == 0 && started) {
-            ArrayList<Tile> toUpdate = new ArrayList<Tile>();
-            for(Tile t : tiles){
-                if(t.stage < 3)toUpdate.add(t);
-            }
-            if(toUpdate.size() == 0){
-                endLevel();
-            }else {
-                int ran = random.nextInt(toUpdate.size());
-                toUpdate.get(ran).activate();
+
+            // Activate a part of the pattern
+            if(currentStage.isOnPattern())
+                currentStage.getPattern().spawn(tiles);
+
+            // Activate a random one
+            else if(!currentStage.isEnded()){
+                ArrayList<Tile> toUpdate = new ArrayList<Tile>();
+                for (Tile t : tiles) {
+                    if (t.stage < 3) toUpdate.add(t);
+                }
+                if (toUpdate.size() == 0) {
+                    endLevel();
+                } else {
+                    int ran = random.nextInt(toUpdate.size());
+                    toUpdate.get(ran).activate();
+                }
             }
         }
+    }
+
+    public void nextStage(){
+        currentStage = stages.get(++stage);
+        currentStage.activatePatern();
     }
 
     public void endLevel(){
@@ -119,15 +133,16 @@ public class Level implements Animatable{
         activateTiles();
 
         // Check stages
-        if(currentStage
-                .clicks >= currentStage.CLICKS_NEEDED){
+        if(currentStage.clicks >= currentStage.CLICKS_NEEDED){
             if(stage >= stages.size()){
                 // oh well, no more stages
-                // oh well, no more stages
             }else{
-                currentStage = stages.get(++stage);
+                // End the stage with a grace period
+                currentStage.endStage();
             }
         }
+
+        // Update other UI
         scoreText.update();
         stageText.update();
     }
@@ -152,4 +167,5 @@ public class Level implements Animatable{
     public ScoreText getScoreText() {
         return scoreText;
     }
+
 }

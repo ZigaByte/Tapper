@@ -21,7 +21,8 @@ public class Input implements OnTouchListener {
 
         int pointerCount = m.getPointerCount();
 
-        for (int i = 0; i < pointerCount; i++) {
+        /*for (int i = 0; i < pointerCount; i++) {*/
+        int i = pointerCount - 1;
             int x = (int) (m.getX(i) * MyCanvas.scaleX);
             int y = (int) (m.getY(i) * MyCanvas.scaleY);
             int id = m.getPointerId(i);
@@ -42,7 +43,7 @@ public class Input implements OnTouchListener {
                 case MotionEvent.ACTION_MOVE:
                     break;
             }
-        }
+        /*}*/
         return true;
     }
 

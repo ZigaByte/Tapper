@@ -25,7 +25,7 @@ public class ResultMenu extends Menu{
         background.populate(tiles);
         background.setAnimated(false);
 
-        skull = new SkullBitmap();
+        skull = new SkullBitmap(this);
         continueButton = new ContinueButton();
         replayButton = new ReplayButton();
         buttons.add(replayButton);
@@ -37,6 +37,11 @@ public class ResultMenu extends Menu{
     @Override
     protected void init() {
         super.init();
+    }
+
+    public void deactivateButtons(){
+        continueButton.deactivate();
+        replayButton.deactivate();
     }
 
     @Override

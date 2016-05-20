@@ -24,11 +24,8 @@ public abstract class AnimationFloatEndable extends  AnimationFloat{
             animatable += step;
         }else{
             finish();
-            animations.remove(this);
-        }
-
-        if(animatable >= goal){
             animatable = goal;
+            animations.remove(this);
         }
     }
 
