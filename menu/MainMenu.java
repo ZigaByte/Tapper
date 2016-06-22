@@ -14,15 +14,18 @@ import com.zigabyte.tapper.menu.button.SoundButton;
  */
 public class MainMenu extends Menu {
 
+    public MainMenu(Menu previous){
+        super(previous);
+    }
+
     @Override
     protected void init() {
         super.init();
-        buttons.add(new PlayButton());
+        buttons.add(new PlayButton(this));
         //buttons.add(new SettingsButton());
-
-        buttons.add(new SoundButton());
-        buttons.add(new ModeButton());
-        buttons.add(new ShopButton());
-        buttons.add(new ScoreButton());
+        buttons.add(new SoundButton(this));
+        buttons.add(new ModeButton(this));
+        buttons.add(new ShopButton(this));
+        buttons.add(new ScoreButton(this));
     }
 }

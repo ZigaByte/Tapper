@@ -20,12 +20,17 @@ public class Menu {
     protected ArrayList<Button> buttons = new ArrayList<Button>();
     protected Background background;
 
-    public Menu(){
+    protected Menu previous;
+
+    public Menu(Menu previous){
+        this.previous = previous;
         init();
     }
 
     protected void init(){
-        background = new Background();
+        if(previous != null)
+            background = previous.getBackground();
+        else background = new Background();
     }
 
     public void checkInput(){
@@ -54,5 +59,24 @@ public class Menu {
         for(Button b : buttons){
             b.render(g);
         }
+    }
+
+    public void setScaleToAllButtons(float scale){
+        if(scale < 0) scale = 0;
+        for(Button b : buttons){
+            b.setScale(scale);
+        }
+    }
+
+    public void setAlphaToAllButtons(int alpha){
+        if(alpha < 0)alpha = 0;
+        else if(alpha > 255)alpha = 255;
+        for(Button b : buttons){
+            b.setAlpha(alpha);
+        }
+    }
+
+    public Background getBackground() {
+        return background;
     }
 }

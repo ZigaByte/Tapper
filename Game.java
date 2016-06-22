@@ -37,11 +37,12 @@ public class Game {
         random = new Random();
 
         state = GameState.MENU;
-        menu = new MainMenu();
+        menu = new MainMenu(null);
     }
 
     public void start() {
         level = new Level();
+
         menu = null;
 
         state = GameState.GAME;

@@ -4,11 +4,15 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.support.v4.view.MotionEventCompat;
 import android.util.Log;
 
 import com.zigabyte.tapper.math.Vector2f;
 import com.zigabyte.tapper.math.animation.AnimationFloat;
+import com.zigabyte.tapper.math.animation.AnimationFloatEndable;
 import com.zigabyte.tapper.math.animation.AnimationFloatSin;
+import com.zigabyte.tapper.menu.MainMenu;
+import com.zigabyte.tapper.menu.Menu;
 import com.zigabyte.tapper.resources.Images;
 
 import static com.zigabyte.tapper.Game.game;
@@ -18,7 +22,9 @@ import static com.zigabyte.tapper.MyCanvas.SIZE;
  */
 public class PlayButton extends Button{
 
-    public PlayButton(){
+
+    public PlayButton(Menu menu){
+        super(menu);
         animations.add(new AnimationFloatSin(scale, 0.1f, 120) {
             @Override
             public void setValue() {
@@ -37,6 +43,22 @@ public class PlayButton extends Button{
 
     @Override
     public void clicked() {
-        game.start();
+        // Start clearing the background
+        menu.getBackground().setClearing(true);
+
+        // Set scale to all menu items
+        animations.add(new AnimationFloatEndable(1, -0.25f, 30) {
+            @Override
+            public void finish() {
+                game.start();
+            }
+
+            @Override
+            public void setValue() {
+                menu.setScaleToAllButtons(animatable);
+                menu.setAlphaToAllButtons((int)(255 * animatable));
+            }
+        });
+        //game.start();
     }
 }

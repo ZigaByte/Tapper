@@ -1,8 +1,10 @@
 package com.zigabyte.tapper.menu;
 
 import android.graphics.Canvas;
+import android.text.method.BaseKeyListener;
 
 import com.zigabyte.tapper.level.Tile;
+import com.zigabyte.tapper.level.ui.Background;
 import com.zigabyte.tapper.level.ui.ScoreText;
 import com.zigabyte.tapper.level.ui.SkullBitmap;
 import com.zigabyte.tapper.menu.button.BackButton;
@@ -22,12 +24,16 @@ public class ResultMenu extends Menu{
     private ScoreText scoreText;
 
     public ResultMenu(ArrayList<Tile> tiles){
+        super(null);
         background.populate(tiles);
-        background.setAnimated(false);
+
+        // Set animated to false if you want the background tiles
+        // to stay as they are, otherwise they start popping and reappearing
+        //background.setAnimated(false);
 
         skull = new SkullBitmap(this);
-        continueButton = new ContinueButton();
-        replayButton = new ReplayButton();
+        continueButton = new ContinueButton(this);
+        replayButton = new ReplayButton(this);
         buttons.add(replayButton);
         buttons.add(continueButton);
 
@@ -53,8 +59,6 @@ public class ResultMenu extends Menu{
     public void render(Canvas g) {
         super.render(g);
         skull.render(g);
-        continueButton.render(g);
-        replayButton.render(g);
         scoreText.render(g);
     }
 }

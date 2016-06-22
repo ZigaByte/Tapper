@@ -12,6 +12,8 @@ import com.zigabyte.tapper.math.animation.AnimationFloat;
 import com.zigabyte.tapper.math.animation.AnimationFloatEndable;
 import com.zigabyte.tapper.math.animation.AnimationVector;
 import com.zigabyte.tapper.math.Vector2f;
+import com.zigabyte.tapper.menu.Menu;
+
 import static com.zigabyte.tapper.Game.game;
 /**
  * Created by Žiga on 26.4.2016.
@@ -19,6 +21,8 @@ import static com.zigabyte.tapper.Game.game;
 public class Button implements Animatable{
 
     protected Bitmap bitmap;
+
+    protected Menu menu;
 
     public Vector2f pos;
     public Vector2f size;
@@ -28,8 +32,9 @@ public class Button implements Animatable{
     protected float rotation;
     protected float scale = 1;
 
-    public Button(){
+    public Button(Menu menu){
         init();
+        this.menu = menu;
         display_pos = pos;
     }
 
@@ -88,5 +93,17 @@ public class Button implements Animatable{
             g.drawBitmap(bitmap, null, rect,  p);
         }
         untranslate(g);
+    }
+
+    public void setScale(float scale) {
+        this.scale = scale;
+    }
+
+    public void setRotation(float rotation) {
+        this.rotation = rotation;
+    }
+
+    public void setAlpha(int alpha) {
+        this.alpha = alpha;
     }
 }

@@ -8,6 +8,7 @@ import android.graphics.Rect;
 import com.zigabyte.tapper.math.Vector2f;
 import com.zigabyte.tapper.math.animation.AnimationFloatSin;
 import com.zigabyte.tapper.menu.MainMenu;
+import com.zigabyte.tapper.menu.Menu;
 import com.zigabyte.tapper.resources.Images;
 
 import static com.zigabyte.tapper.Game.game;
@@ -21,7 +22,8 @@ public class ContinueButton extends Button{
     private Bitmap icon;
     private Bitmap heart;
 
-    public ContinueButton(){
+    public ContinueButton(Menu menu){
+        super(menu);
         animations.add(new AnimationFloatSin(scale, 0.05f, 120) {
             @Override
             public void setValue() {

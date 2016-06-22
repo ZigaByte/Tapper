@@ -1,6 +1,8 @@
 package com.zigabyte.tapper.menu.button;
 
+import com.zigabyte.tapper.MyCanvas;
 import com.zigabyte.tapper.math.Vector2f;
+import com.zigabyte.tapper.menu.Menu;
 import com.zigabyte.tapper.resources.Images;
 
 /**
@@ -8,7 +10,8 @@ import com.zigabyte.tapper.resources.Images;
  */
 public class ModeButton extends MainMenuButtonBottom{
 
-    public ModeButton(){
+    public ModeButton(Menu menu){
+        super(menu);
         bitmap = Images.button_mode;
     }
 
@@ -16,5 +19,15 @@ public class ModeButton extends MainMenuButtonBottom{
     protected void init() {
         size = new Vector2f(SIZE, SIZE);
         pos = new Vector2f(X_OFFSET * 1 + (X_OFFSET - SIZE) / 2 , Y_POS);
+    }
+
+    @Override
+    public void clicked() {
+        MyCanvas.context.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                MyCanvas.context.signOut();
+            }
+        });
     }
 }

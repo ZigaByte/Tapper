@@ -8,7 +8,10 @@ import android.graphics.Rect;
 import com.zigabyte.tapper.math.Vector2f;
 import com.zigabyte.tapper.math.animation.AnimationFloatSin;
 import com.zigabyte.tapper.menu.MainMenu;
+import com.zigabyte.tapper.menu.Menu;
 import com.zigabyte.tapper.resources.Images;
+
+import java.util.ArrayList;
 
 import static com.zigabyte.tapper.Game.game;
 import static com.zigabyte.tapper.MyCanvas.SIZE;
@@ -21,7 +24,8 @@ public class ReplayButton extends Button{
     private Bitmap icon;
     private Bitmap heart;
 
-    public ReplayButton(){
+    public ReplayButton(Menu menu){
+        super(menu);
         animations.add(new AnimationFloatSin(scale, 0.05f, 120) {
             @Override
             public void setValue() {
@@ -42,7 +46,7 @@ public class ReplayButton extends Button{
 
     @Override
     public void clicked() {
-        game.menu = new MainMenu();
+        game.menu = new MainMenu(menu);
     }
 
     public void render(Canvas g){

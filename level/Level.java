@@ -47,7 +47,7 @@ public class Level implements Animatable{
 
         for (int x = 0; x < 4; x++) {
             for (int y = 0; y < 4; y++) {
-                tiles.add(new Tile(new Vector2f(x * (960 / 4), y * (1600 / 4)), new Vector2f((960 / 4), (1600 / 4))));
+                 tiles.add(new Tile(new Vector2f(x * (960 / 4), y* (1600 / 4)), new Vector2f((960 / 4), (1600 / 4))));
             }
         }
         stages.add(new Stage(1, 20, 15));

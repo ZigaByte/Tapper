@@ -25,7 +25,7 @@ public class MyCanvas extends SurfaceView implements Runnable  {
     private Thread thread;
     public boolean running = false;
 
-    public MainActivity context;
+    public static MainActivity context;
     public static MyCanvas canvas;
 
     public static int screenWidth, screentHeight;

@@ -12,6 +12,10 @@ import static com.zigabyte.tapper.MyCanvas.SIZE;
  */
 public class BackButton extends Button{
 
+    public BackButton(Menu menu){
+        super(menu);
+    }
+
     @Override
     protected void init() {
         size = new Vector2f(200, 200);
@@ -20,6 +24,6 @@ public class BackButton extends Button{
 
     @Override
     public void clicked() {
-        game.menu = new MainMenu();
+        game.menu = new MainMenu(menu);
     }
 }

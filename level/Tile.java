@@ -30,7 +30,9 @@ public class Tile implements Animatable{
         this(new Vector2f(), new Vector2f());
     }
 
-    public Tile(Vector2f pos, Vector2f size) {this(pos, size, true);}
+    public Tile(Vector2f pos, Vector2f size) {
+        this(pos, size, false);
+    }
 
     public Tile(Vector2f pos, Vector2f size, boolean animation) {
         this.pos = pos;
@@ -38,7 +40,8 @@ public class Tile implements Animatable{
 
         stage = 0;
 
-        if(animation)
+        transparency = 255;
+        /*if(animation)
             animations.add(new AnimationFloatSqrt(0, 255, 40) {
                 @Override
                 public void setValue() {
@@ -51,7 +54,7 @@ public class Tile implements Animatable{
                     game.level.paused = false;
                 }
             });
-        else transparency = 255;
+        else transparency = 255;*/
     }
 
     public boolean clicked() {

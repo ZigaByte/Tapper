@@ -2,6 +2,7 @@ package com.zigabyte.tapper.menu.button;
 
 import com.zigabyte.tapper.math.Vector2f;
 import com.zigabyte.tapper.math.animation.AnimationFloat;
+import com.zigabyte.tapper.menu.Menu;
 import com.zigabyte.tapper.menu.SettingsMenu;
 
 import java.util.Set;
@@ -14,7 +15,8 @@ import static com.zigabyte.tapper.MyCanvas.SIZE;
  */
 public class SettingsButton extends Button{
 
-    public SettingsButton(){
+    public SettingsButton(Menu menu){
+        super(menu);
         animations.add(new AnimationFloat(0, 1) {
             @Override
             public void setValue() {
@@ -31,6 +33,6 @@ public class SettingsButton extends Button{
 
     @Override
     public void clicked() {
-        game.menu = new SettingsMenu();
+        game.menu = new SettingsMenu(menu);
     }
 }
