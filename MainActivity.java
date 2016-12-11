@@ -3,6 +3,7 @@ package com.zigabyte.tapper;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.media.MediaPlayer;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
@@ -94,15 +95,7 @@ public class MainActivity extends BaseGameActivity implements GoogleApiClient.Co
     @Override
     public void onConnected(Bundle bundle) {
         Log.d(TAG, "onConnected(): connected to Google APIs");
-        // Show sign-out button on main menu
-        //mMainMenuFragment.setShowSignInButton(false);
 
-        // Show "you are signed in" message on win screen, with no sign in button.
-        //mWinFragment.setShowSignInButton(false);
-
-        //Games.setViewForPopups(client, findViewById(R.id.canvas));
-
-        // Set the greeting appropriately on main menu
         Player p = Games.Players.getCurrentPlayer(getApiClient());
         String displayName;
         if (p == null) {
@@ -112,15 +105,6 @@ public class MainActivity extends BaseGameActivity implements GoogleApiClient.Co
             displayName = p.getDisplayName();
             Log.d(TAG, "onConnected(): welcome " + displayName);
         }
-        //mMainMenuFragment.setGreeting("Hello, " + displayName);
-
-
-        // if we have accomplishments to push, push them
-        /*if (!mOutbox.isEmpty()) {
-            pushAccomplishments();
-            Toast.makeText(this, getString(R.string.your_progress_will_be_uploaded),
-                    Toast.LENGTH_LONG).show();
-        }*/
     }
 
     @Override
@@ -154,8 +138,6 @@ public class MainActivity extends BaseGameActivity implements GoogleApiClient.Co
     public void displayLeaderboard(){
         startActivityForResult(Games.Leaderboards.getLeaderboardIntent(getApiClient(), getString(R.string.leaderboard_leaderboard)),0);
         Games.Achievements.unlock(getApiClient(), getString(R.string.achievement_test1));
-
-        //startActivityForResult(Games.Leaderboards.getAllLeaderboardsIntent(getApiClient()), 0);
     }
 
     public void submitScore(int score){
@@ -169,6 +151,10 @@ public class MainActivity extends BaseGameActivity implements GoogleApiClient.Co
 
     public void signIn(){
         super.beginUserInitiatedSignIn();
+    }
+
+    public GoogleApiClient getApi(){
+        return getApiClient();
     }
 
 }

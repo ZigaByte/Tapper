@@ -3,12 +3,14 @@ package com.zigabyte.tapper;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.zigabyte.tapper.level.Level;
 import com.zigabyte.tapper.level.Tile;
 import com.zigabyte.tapper.math.animation.Animation;
 import com.zigabyte.tapper.menu.MainMenu;
 import com.zigabyte.tapper.menu.Menu;
 import com.zigabyte.tapper.menu.ResultMenu;
+import com.zigabyte.tapper.resources.Sound;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -18,6 +20,8 @@ public class Game {
     public enum GameState {
         MENU, GAME;
     }
+
+    MainActivity context;
 
     public static Game game;
 
@@ -31,13 +35,17 @@ public class Game {
 
     private int time = 0;
 
-    public Game() {
+    public Game(MainActivity context) {
+        this.context = context;
         game = this;
 
         random = new Random();
 
         state = GameState.MENU;
         menu = new MainMenu(null);
+
+        // Start music
+        Sound.music.start();
     }
 
     public void start() {
@@ -79,4 +87,9 @@ public class Game {
                 break;
         }
     }
+
+    public MainActivity getContext(){
+        return context;
+    }
+
 }

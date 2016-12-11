@@ -16,11 +16,13 @@ public class Images {
     public static Bitmap button_sound;
     public static Bitmap button_scores;
 
-    public static Bitmap button_shield;
-    public static Bitmap button_ads;
-    public static Bitmap button_diamond;
+    public static Bitmap button_retry;
+    public static Bitmap button_back;
+
     public static Bitmap button_heart;
     public static Bitmap button_knife;
+    public static Bitmap button_rate;
+    public static Bitmap button_achievements;
 
     public static Bitmap defeat_bones;
     public static Bitmap defeat_skull;
@@ -32,11 +34,12 @@ public class Images {
         button_sound = BitmapFactory.decodeResource(x.getResources(), R.drawable.button_sound);
         button_scores = BitmapFactory.decodeResource(x.getResources(), R.drawable.button_scores);
 
-        button_shield = BitmapFactory.decodeResource(x.getResources(), R.drawable.button_shield);
-        button_ads = BitmapFactory.decodeResource(x.getResources(), R.drawable.button_ads);
-        button_diamond = BitmapFactory.decodeResource(x.getResources(), R.drawable.button_diamond);
+        button_retry = BitmapFactory.decodeResource(x.getResources(), R.drawable.button_retry);
+        button_back = BitmapFactory.decodeResource(x.getResources(), R.drawable.button_back);
         button_heart = BitmapFactory.decodeResource(x.getResources(), R.drawable.button_heart);
         button_knife = BitmapFactory.decodeResource(x.getResources(), R.drawable.button_knife);
+        button_rate = BitmapFactory.decodeResource(x.getResources(), R.drawable.button_rate);
+        button_achievements = BitmapFactory.decodeResource(x.getResources(), R.drawable.button_achievements);
 
         defeat_bones = BitmapFactory.decodeResource(x.getResources(), R.drawable.defeat_bones);
         defeat_skull = BitmapFactory.decodeResource(x.getResources(), R.drawable.defeat_skull);

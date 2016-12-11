@@ -33,8 +33,47 @@ public class StageText extends Text{
         });
     }
 
+    private void fadeIn(){
+        animations.add(new AnimationFloatSqrt(0,40,30) {
+            @Override
+            public void finish() {
+
+                // Time before fade out
+                animations.add(new AnimationFloatEndable(0,1,90) {
+                    @Override
+                    public void finish() {
+                        fadeOut();
+                    }
+                    @Override
+                    public void setValue() {}
+                });
+            }
+
+            @Override
+            public void setValue() {
+                setAlpha((int)animatable);
+            }
+        });
+    }
+
+    private void fadeOut(){
+        animations.add(new AnimationFloatEndable(40,0,30) {
+            @Override
+            public void finish() {
+            }
+
+            @Override
+            public void setValue() {
+                setAlpha((int)animatable);
+            }
+        });
+    }
+
     public void update(){
-        stage_number = game.level.getStageNumber();
+        if(stage_number != game.level.getStageNumber()){
+            stage_number = game.level.getStageNumber();
+            fadeIn();
+        }
     }
 
     @Override

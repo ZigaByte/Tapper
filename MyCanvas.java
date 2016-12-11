@@ -74,7 +74,7 @@ public class MyCanvas extends SurfaceView implements Runnable  {
         // scaleX = scaleY;
         Log.e("Scales ", "x : " + scaleX + " | y : " + scaleY + " | " + screenWidth + "  " + screentHeight);
 
-        game = new Game();
+        game = new Game(context);
 
         Typeface myTypeface = Typeface.createFromAsset(context.getAssets(), "roboto.ttf");
         game.textPaint = new Paint();

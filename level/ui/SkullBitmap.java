@@ -43,28 +43,6 @@ public class SkullBitmap implements Animatable{
             public void finish() {
                 transparent = 255;
                 offset = 0;
-                // Timer to return to menu when skull in place
-                animations.add(new AnimationFloatEndable(0,1, 90) {
-                    @Override
-                    public void finish() {
-                        // After 2 seconds, enlarge the thing
-                        resultMenu.deactivateButtons();
-                        animations.add(new AnimationFloatEndable(1,450,60) {
-                            @Override
-                            public void finish() {
-                                //game.menu = new MainMenu();
-
-                            }
-                            @Override
-                            public void setValue() {
-                                offset_enlarge = (int) animatable;
-                            }
-                        });
-                    }
-                    @Override
-                    public void setValue() {}
-                });
-
                 animations.add(new AnimationFloatSin(0, -10, 120) {
                     @Override
                     public void setValue() {

@@ -1,12 +1,9 @@
 package com.zigabyte.tapper.menu;
 
-import com.zigabyte.tapper.menu.Menu;
-import com.zigabyte.tapper.menu.button.Button;
-import com.zigabyte.tapper.menu.button.ModeButton;
+import com.zigabyte.tapper.menu.button.AchievementsButton;
 import com.zigabyte.tapper.menu.button.PlayButton;
+import com.zigabyte.tapper.menu.button.RateButton;
 import com.zigabyte.tapper.menu.button.ScoreButton;
-import com.zigabyte.tapper.menu.button.SettingsButton;
-import com.zigabyte.tapper.menu.button.ShopButton;
 import com.zigabyte.tapper.menu.button.SoundButton;
 
 /**
@@ -22,10 +19,12 @@ public class MainMenu extends Menu {
     protected void init() {
         super.init();
         buttons.add(new PlayButton(this));
-        //buttons.add(new SettingsButton());
+
         buttons.add(new SoundButton(this));
-        buttons.add(new ModeButton(this));
-        buttons.add(new ShopButton(this));
+        buttons.add(new RateButton(this));
+        buttons.add(new AchievementsButton(this));
         buttons.add(new ScoreButton(this));
+
+        background.removeBlueTile();
     }
 }

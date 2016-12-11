@@ -15,7 +15,6 @@ public class ScoreText extends Text{
     private int score;
 
     public ScoreText(){
-
         alpha = 0;
         animations.add(new AnimationFloatSqrt(0,40,30) {
             @Override

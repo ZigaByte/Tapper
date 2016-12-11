@@ -1,15 +1,12 @@
 package com.zigabyte.tapper.menu;
 
 import android.graphics.Canvas;
-import android.text.method.BaseKeyListener;
 
 import com.zigabyte.tapper.level.Tile;
-import com.zigabyte.tapper.level.ui.Background;
 import com.zigabyte.tapper.level.ui.ScoreText;
 import com.zigabyte.tapper.level.ui.SkullBitmap;
-import com.zigabyte.tapper.menu.button.BackButton;
-import com.zigabyte.tapper.menu.button.ContinueButton;
-import com.zigabyte.tapper.menu.button.ReplayButton;
+import com.zigabyte.tapper.menu.button.ButtonBack;
+import com.zigabyte.tapper.menu.button.ButtonRetry;
 
 import java.util.ArrayList;
 import static com.zigabyte.tapper.Game.game;
@@ -19,8 +16,8 @@ import static com.zigabyte.tapper.Game.game;
 public class ResultMenu extends Menu{
 
     private SkullBitmap skull;
-    private ContinueButton continueButton;
-    private ReplayButton replayButton;
+    private ButtonBack backButton;
+    private ButtonRetry retryButton;
     private ScoreText scoreText;
 
     public ResultMenu(ArrayList<Tile> tiles){
@@ -32,10 +29,10 @@ public class ResultMenu extends Menu{
         //background.setAnimated(false);
 
         skull = new SkullBitmap(this);
-        continueButton = new ContinueButton(this);
-        replayButton = new ReplayButton(this);
-        buttons.add(replayButton);
-        buttons.add(continueButton);
+        backButton = new ButtonBack(this);
+        retryButton = new ButtonRetry(this);
+        buttons.add(backButton);
+        buttons.add(retryButton);
 
         scoreText = game.level.getScoreText();
     }
@@ -43,11 +40,6 @@ public class ResultMenu extends Menu{
     @Override
     protected void init() {
         super.init();
-    }
-
-    public void deactivateButtons(){
-        continueButton.deactivate();
-        replayButton.deactivate();
     }
 
     @Override

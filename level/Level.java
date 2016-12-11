@@ -4,20 +4,18 @@ import android.graphics.Canvas;
 import android.util.Log;
 
 import com.zigabyte.tapper.input.Input;
-import com.zigabyte.tapper.level.stage.Pattern;
 import com.zigabyte.tapper.level.stage.Stage;
-import com.zigabyte.tapper.level.ui.GameOverText;
 import com.zigabyte.tapper.level.ui.ScoreText;
 import com.zigabyte.tapper.level.ui.StageText;
 import com.zigabyte.tapper.math.Vector2f;
 import com.zigabyte.tapper.math.animation.Animatable;
-import com.zigabyte.tapper.math.animation.Animation;
+import com.zigabyte.tapper.math.animation.AnimationFloatEndable;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 import static com.zigabyte.tapper.Game.game;
-import static com.zigabyte.tapper.Game.textPaint;
+
 /**
  * Created by Žiga on 19.4.2016.
  */
@@ -45,19 +43,23 @@ public class Level implements Animatable{
     public Level() {
         random = new Random();
 
+        // Add the tiles
         for (int x = 0; x < 4; x++) {
             for (int y = 0; y < 4; y++) {
-                 tiles.add(new Tile(new Vector2f(x * (960 / 4), y* (1600 / 4)), new Vector2f((960 / 4), (1600 / 4))));
+                 tiles.add(new Tile(new Vector2f(x * (960 / 4), y * (1600 / 4)), new Vector2f((960 / 4), (1600 / 4))));
             }
         }
-        stages.add(new Stage(1, 20, 15));
-        stages.add(new Stage(2, 20, 12));
-        stages.add(new Stage(3, 50, 10));
-        stages.add(new Stage(4, 50, 8));
-        stages.add(new Stage(5, 50, 6));
+
+        // Set up stages
+        stages.add(new Stage(1, 20, 9));
+        stages.add(new Stage(2, 20, 9));
+        stages.add(new Stage(3, 20, 9));
+        stages.add(new Stage(4, 20, 8));
+        stages.add(new Stage(5, 50000, 6));
 
         stage = 0;
         currentStage = stages.get(0);
+        currentStage.activatePatern();
 
         scoreText = new ScoreText();
         stageText = new StageText();
@@ -70,12 +72,15 @@ public class Level implements Animatable{
                 input = input.div(new Vector2f(960 / 4, 1600 / 4));
                 Log.e("Input", input.x + " || " + input.y + " ||| " + (4 * input.getXi() + input.getYi()) );
 
-                boolean legal = tiles.get(4 * input.getXi() + input.getYi()).clicked();
+                // Click the selected tile and check if it's legal
+                Tile toClick = tiles.get(4 * input.getXi() + input.getYi());
+                boolean legal = toClick.clicked();
                 if(legal){
                     score++;
                     currentStage.clicks++;
-                }else{
-                    endLevel();
+                } else {
+                    toClick.flashBlue();
+                    gameOver(GAME_OVER_ILLEGAL);
                 }
             }
         }
@@ -83,7 +88,7 @@ public class Level implements Animatable{
 
     public void activateTiles(){
         currentStage.time++;
-        if (time++ % currentStage.SPAWN_SPEED == 0 && started) {
+        if (time++ % currentStage.SPAWN_SPEED == 0 && started && !paused) {
 
             // Activate a part of the pattern
             if(currentStage.isOnPattern())
@@ -96,7 +101,7 @@ public class Level implements Animatable{
                     if (t.stage < 3) toUpdate.add(t);
                 }
                 if (toUpdate.size() == 0) {
-                    endLevel();
+                    gameOver(GAME_OVER_FULL);
                 } else {
                     int ran = random.nextInt(toUpdate.size());
                     toUpdate.get(ran).activate();
@@ -110,13 +115,28 @@ public class Level implements Animatable{
         currentStage.activatePatern();
     }
 
-    public void endLevel(){
-        //game.end();
+
+    // Game over types
+    private static final int GAME_OVER_ILLEGAL = 1;
+    private static final int GAME_OVER_FULL = 2;
+
+    public void gameOver(int GAME_OVER_TYPE){
+        paused = true;
+
         if(!ended){
             ended = true;
             endedTime = time;
             stageText.setEnabled(false);
-            game.end();
+
+            animations.add(new AnimationFloatEndable(0, 0, 30) {
+                @Override
+                public void finish() {
+                    game.end();
+                }
+
+                @Override
+                public void setValue() {}
+            });
         }
     }
 

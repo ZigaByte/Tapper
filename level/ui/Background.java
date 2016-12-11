@@ -96,6 +96,12 @@ public class Background {
         }
     }
 
+    public void removeBlueTile(){
+        for (Tile t : tiles){
+            if(t.getBlue())t.stopBlue();
+        }
+    }
+
     public void setAnimated(boolean animated){
         this.animated = animated;
     }

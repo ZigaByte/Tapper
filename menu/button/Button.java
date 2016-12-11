@@ -26,6 +26,7 @@ public class Button implements Animatable{
 
     public Vector2f pos;
     public Vector2f size;
+    public Vector2f offset;
 
     protected int alpha = 255;
     protected Vector2f display_pos;
@@ -36,6 +37,7 @@ public class Button implements Animatable{
         init();
         this.menu = menu;
         display_pos = pos;
+        offset = new Vector2f(0,0);
     }
 
     protected void init(){
@@ -71,7 +73,7 @@ public class Button implements Animatable{
     }
 
     public void translate(Canvas g){
-        g.translate(display_pos.x + size.x / 2, display_pos.y + size.y / 2);
+        g.translate(display_pos.x + offset.x + size.x / 2, display_pos.y + offset.y + size.y / 2);
         g.rotate(rotation);
         g.scale(scale, scale);
     }
@@ -79,7 +81,7 @@ public class Button implements Animatable{
     public void untranslate(Canvas g){
         g.scale(1/scale, 1/scale);
         g.rotate(-rotation);
-        g.translate(-(display_pos.x + size.x / 2), -(display_pos.y + size.y / 2));
+        g.translate(-(display_pos.x + offset.x + size.x / 2), -(display_pos.y + offset.y + size.y / 2));
     }
 
     public void render(Canvas g){

@@ -22,10 +22,11 @@ import static com.zigabyte.tapper.MyCanvas.SIZE;
  */
 public class PlayButton extends Button{
 
+    private boolean starting = false;
 
     public PlayButton(Menu menu){
         super(menu);
-        animations.add(new AnimationFloatSin(scale, 0.1f, 120) {
+        animations.add(new AnimationFloatSin(scale, 0.1f, 110) {
             @Override
             public void setValue() {
                 scale = animatable;
@@ -33,6 +34,8 @@ public class PlayButton extends Button{
         });
 
         bitmap = Images.button_play;
+
+        starting = false;
     }
 
     @Override
@@ -43,22 +46,11 @@ public class PlayButton extends Button{
 
     @Override
     public void clicked() {
-        // Start clearing the background
-        menu.getBackground().setClearing(true);
+        if(starting)
+            return;
+        else
+            starting = true;
 
-        // Set scale to all menu items
-        animations.add(new AnimationFloatEndable(1, -0.25f, 30) {
-            @Override
-            public void finish() {
-                game.start();
-            }
-
-            @Override
-            public void setValue() {
-                menu.setScaleToAllButtons(animatable);
-                menu.setAlphaToAllButtons((int)(255 * animatable));
-            }
-        });
-        //game.start();
+        menu.startGame();
     }
 }

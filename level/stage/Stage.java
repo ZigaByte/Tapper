@@ -37,11 +37,11 @@ public class Stage implements Animatable{
 
     public void endStage(){
         // Only allow the stage to end once
-        if(ended)return;
+            if(ended)return;
 
-        ended = true;
-        animations.add(new AnimationFloatEndable(0,1,120) {
-            @Override
+            ended = true;
+            animations.add(new AnimationFloatEndable(0,1,120) {
+                @Override
             public void finish() {
                 game.level.nextStage();
                 animations.remove(this);

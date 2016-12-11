@@ -9,6 +9,7 @@ import com.zigabyte.tapper.math.Vector2f;
 import com.zigabyte.tapper.math.animation.Animatable;
 import com.zigabyte.tapper.math.animation.Animation;
 import com.zigabyte.tapper.math.animation.AnimationFloatEndable;
+import com.zigabyte.tapper.math.animation.AnimationFloatSin;
 import com.zigabyte.tapper.math.animation.AnimationFloatSqrt;
 import com.zigabyte.tapper.resources.Colors;
 
@@ -22,9 +23,13 @@ public class Tile implements Animatable{
 
     public Vector2f pos;
     public Vector2f size;
-    private int transparency = 0;
 
     public int stage;
+
+    // Blue - it was clicked by mistake
+    private boolean blue = false;
+    private int blueSaturation = 0;
+    private Animation flashing;
 
     public Tile() {
         this(new Vector2f(), new Vector2f());
@@ -39,22 +44,6 @@ public class Tile implements Animatable{
         this.size = size;
 
         stage = 0;
-
-        transparency = 255;
-        /*if(animation)
-            animations.add(new AnimationFloatSqrt(0, 255, 40) {
-                @Override
-                public void setValue() {
-                    transparency = (int) animatable;
-                }
-
-                @Override
-                public void finish() {
-                    game.level.started = true;
-                    game.level.paused = false;
-                }
-            });
-        else transparency = 255;*/
     }
 
     public boolean clicked() {
@@ -68,6 +57,37 @@ public class Tile implements Animatable{
         stage++;
     }
 
+    public void flashBlue(){
+        blue = true;
+        stage = 4;
+
+        // Saturation for the blue
+        flashing = new AnimationFloatSin(0.5f, 0.5f, 60) {
+            @Override
+            public void setValue() {
+                blueSaturation = (int)(255 * animatable);
+            }
+        };
+        animations.add(flashing);
+/*
+        animations.add(new AnimationFloatEndable(0,1,120) {
+            @Override
+            public void finish() {
+                Game.game.level.endLevel();
+                stopFlashing();
+            }
+            @Override
+            public void setValue() {}
+        });*/
+    }
+
+    public void stopFlashing(){
+        stage = 4;
+        animations.remove(flashing);
+        flashing = null;
+        blueSaturation = 255;
+    }
+
     public void update() {
 
     }
@@ -76,10 +96,6 @@ public class Tile implements Animatable{
         Paint p = new Paint();
 
         switch (stage) {
-            case 0:
-                //p.setColor(Colors.GRAY);
-                p.setColor(Colors.CLOUD);
-                break;
             case 1:
                 p.setColor(Colors.YELLOW);
                 break;
@@ -89,16 +105,36 @@ public class Tile implements Animatable{
             case 3:
                 p.setColor(Colors.RED);
                 break;
+
+            // Set to CLOUD if it-s
+            default:
+                p.setColor(Colors.CLOUD);
         }
+        if(blue)
+            p.setColor(Colors.CLOUD);
 
         g.translate(pos.x + size.x / 2, pos.y + size.y / 2);
-        g.scale(0.965f * (transparency / 255.0f), 0.975f * (transparency / 255.0f));
+        g.scale(0.965f, 0.975f );
 
-        p.setAlpha(transparency);
         g.drawRect(-size.x / 2, -size.y / 2, size.x / 2, size.y / 2, p);
 
-        g.scale(1 / (0.965f * (transparency / 255.0f)), 1 / (0.975f * (transparency / 255.0f)));
+        // Draw the blue on top
+        if(blue) {
+            p.setColor(Colors.BLUE);
+            p.setAlpha(blueSaturation);
+            g.drawRect(-size.x / 2, -size.y / 2, size.x / 2, size.y / 2, p);
+        }
+
+        g.scale(1 / 0.965f, 1 / 0.975f);
         g.translate(-(pos.x + size.x / 2), -(pos.y + size.y / 2));
     }
 
+    public void stopBlue(){
+        this.blue = false;
+        stage = 3;
+    }
+
+    public boolean getBlue() {
+        return blue;
+    }
 }

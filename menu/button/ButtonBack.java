@@ -19,46 +19,28 @@ import static com.zigabyte.tapper.MyCanvas.SIZE;
 /**
  * Created by zvene_000 on 19.5.2016.
  */
-public class ReplayButton extends Button{
+public class ButtonBack extends Button{
 
-    private Bitmap icon;
-    private Bitmap heart;
-
-    public ReplayButton(Menu menu){
+    public ButtonBack(Menu menu){
         super(menu);
         animations.add(new AnimationFloatSin(scale, 0.05f, 120) {
             @Override
             public void setValue() {
-                scale = animatable;
+                scale = animatable-0.1f;
             }
         });
 
-        bitmap = Images.button_shield;
-        icon = Images.button_diamond;
-        heart = Images.button_heart;
+        bitmap = Images.button_back;
     }
 
     @Override
     protected void init() {
         size = new Vector2f(240, 400);
-        pos = SIZE.div(2).sub(size.div(2)).add(new Vector2f(120, 200));
+        pos = SIZE.div(2).sub(size.div(2)).add(new Vector2f(-120, 200));
     }
 
     @Override
     public void clicked() {
         game.menu = new MainMenu(menu);
-    }
-
-    public void render(Canvas g){
-        super.render(g);
-
-        Paint p = new Paint();
-        p.setAlpha(alpha);
-
-        translate(g);
-        Rect rect = new Rect(-(int)size.x / 2, -(int)size.y / 2, (int)size.x / 2, (int)size.y / 2 );
-        g.drawBitmap(icon, null, rect,  p);
-        g.drawBitmap(heart, null, rect,  p);
-        untranslate(g);
     }
 }
